@@ -1,21 +1,25 @@
 {
-  "name": "sanity-template-astro-clean",
-  "description": "Minimal Astro site with Sanity Studio",
+  "name": "erislaine-landing-page",
+  "private": true,
+  "description": "Production-ready Astro + Sanity landing page and blog monorepo",
   "scripts": {
-    "dev": "concurrently \"npm run dev --workspace=astro-app\" \"npm run dev --workspace=studio\""
+    "dev": "concurrently \"pnpm --filter @erislaine/astro-app dev\" \"pnpm --filter @erislaine/studio dev\"",
+    "dev:app": "pnpm --filter @erislaine/astro-app dev",
+    "dev:studio": "pnpm --filter @erislaine/studio dev",
+    "build": "pnpm -r build",
+    "build:app": "pnpm --filter @erislaine/astro-app build",
+    "build:studio": "pnpm --filter @erislaine/studio build",
+    "preview": "pnpm --filter @erislaine/astro-app preview",
+    "check": "pnpm --filter @erislaine/astro-app check",
+    "seed": "pnpm --filter @erislaine/studio seed"
   },
   "keywords": [
-    "Sanity",
-    "Astro",
-    "Headless CMS",
-    "Visual Editing",
-    "Live Content API (LCAPI)",
-    "Real-time"
+    "sanity",
+    "astro",
+    "landing-page",
+    "blog",
+    "cms"
   ],
-  "bugs": {
-    "url": "https://github.com/sanity-io/sanity-template-astro-clean/issues"
-  },
-  "homepage": "https://github.com/sanity-io/sanity-template-astro-clean#readme",
   "workspaces": [
     "studio",
     "astro-app"
@@ -23,5 +27,6 @@
   "devDependencies": {
     "concurrently": "^9.2.1"
   },
+  "packageManager": "pnpm@10.11.1",
   "type": "module"
 }

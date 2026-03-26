@@ -1,19 +1,33 @@
+import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
-import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './src/schemaTypes'
+import {deskStructure, singletonTypes} from './src/structure'
 
-// Environment variables for project configuration
-const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'your-projectID'
+const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'your-project-id'
 const dataset = process.env.SANITY_STUDIO_DATASET || 'production'
 
 export default defineConfig({
-  name: 'sanity-template-astro-clean',
-  title: 'Sanity Astro Starter',
+  name: 'erislaine-studio',
+  title: 'Erislaine Content Studio',
   projectId,
   dataset,
-  plugins: [structureTool(), visionTool()],
+  plugins: [
+    structureTool({
+      structure: deskStructure,
+    }),
+    visionTool(),
+  ],
   schema: {
     types: schemaTypes,
+    templates: (prev) => prev.filter(({schemaType}) => !singletonTypes.has(schemaType)),
+  },
+  document: {
+    actions: (prev, context) => {
+      if (singletonTypes.has(context.schemaType)) {
+        return prev.filter(({action}) => action !== 'duplicate' && action !== 'delete')
+      }
+      return prev
+    },
   },
 })

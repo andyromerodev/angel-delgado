@@ -1,14 +1,64 @@
 ---
-import Card from "../components/Card.astro";
-import Welcome from "../components/Welcome.astro";
-import Layout from "../layouts/Layout.astro";
-import { getPosts } from "../utils/sanity";
+import Faq from '../components/landing/Faq.astro'
+import Hero from '../components/landing/Hero.astro'
+import InfoGrid from '../components/landing/InfoGrid.astro'
+import Testimonials from '../components/landing/Testimonials.astro'
+import BaseLayout from '../layouts/BaseLayout.astro'
+import {createSeo} from '../lib/seo'
+import {getLandingPage, getSiteSettings} from '../lib/sanity/api'
 
-const posts = await getPosts();
+const [landing, siteSettings] = await Promise.all([getLandingPage(), getSiteSettings()])
+
+if (!landing) {
+  throw new Error('No existe documento landingPage en Sanity. Ejecuta el seed para cargar contenido inicial.')
+}
+
+const seo = createSeo({
+  title: landing.seoTitle,
+  description: landing.seoDescription,
+  fallbackTitle: landing.siteTitle || siteSettings?.defaultSeoTitle || 'Landing page',
+  fallbackDescription:
+    landing.siteDescription || siteSettings?.defaultSeoDescription || 'Sitio profesional construido con Astro + Sanity',
+})
+
+const siteTitle = siteSettings?.siteName || landing.siteTitle || 'Erislaine'
 ---
 
-<Layout title="Welcome to Astro.">
-  <section>
-    {posts.length ? posts.map((post) => <Card post={post} />) : <Welcome />}
-  </section>
-</Layout>
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  siteTitle={siteTitle}
+  footerText={landing.footerText}
+  contactEmail={landing.contactEmail}
+  contactWhatsApp={landing.contactWhatsApp}
+>
+  <Hero
+    title={landing.heroTitle}
+    subtitle={landing.heroSubtitle}
+    primaryText={landing.heroCtaText}
+    primaryLink={landing.heroCtaLink}
+    secondaryText={landing.heroSecondaryCtaText}
+    secondaryLink={landing.heroSecondaryCtaLink}
+  />
+
+  {landing.services?.length > 0 && (
+    <InfoGrid
+      title="Servicios"
+      subtitle="Soluciones orientadas a conversión, posicionamiento y rendimiento sostenible."
+      items={landing.services}
+      columns={3}
+    />
+  )}
+
+  {landing.benefits?.length > 0 && (
+    <InfoGrid
+      title="Beneficios"
+      subtitle="Trabajo con enfoque en resultados medibles y procesos claros para tu equipo."
+      items={landing.benefits}
+      columns={2}
+    />
+  )}
+
+  {landing.testimonials?.length > 0 && <Testimonials items={landing.testimonials} />}
+  {landing.faq?.length > 0 && <Faq items={landing.faq} />}
+</BaseLayout>

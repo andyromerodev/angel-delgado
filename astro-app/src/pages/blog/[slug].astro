@@ -1,0 +1,129 @@
+---
+import type {InferGetStaticParamsType} from 'astro'
+import {PortableText} from 'astro-portabletext'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import {createSeo} from '../../lib/seo'
+import {imageUrl} from '../../lib/sanity/image'
+import {formatDate} from '../../lib/utils/date'
+import {getBlogPostBySlug, getBlogSlugs, getLandingPage, getSiteSettings} from '../../lib/sanity/api'
+
+export async function getStaticPaths() {
+  const slugs = await getBlogSlugs()
+  return slugs.map(({slug}) => ({params: {slug}}))
+}
+
+type Params = InferGetStaticParamsType<typeof getStaticPaths>
+const {slug} = Astro.params as Params
+
+const [post, landing, siteSettings] = await Promise.all([
+  getBlogPostBySlug(slug),
+  getLandingPage(),
+  getSiteSettings(),
+])
+
+if (!post) {
+  throw new Error(`No se encontró el post con slug ${slug}`)
+}
+
+const seo = createSeo({
+  title: post.seoTitle,
+  description: post.seoDescription || post.excerpt,
+  fallbackTitle: post.title,
+  fallbackDescription: post.excerpt || siteSettings?.defaultSeoDescription || 'Artículo del blog',
+})
+
+const cover = imageUrl(post.coverImage)?.width(1400).height(780).fit('crop').url()
+const siteTitle = siteSettings?.siteName || landing?.siteTitle || 'Erislaine'
+---
+
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  siteTitle={siteTitle}
+  footerText={landing?.footerText}
+  contactEmail={landing?.contactEmail}
+  contactWhatsApp={landing?.contactWhatsApp}
+  ogImage={cover}
+>
+  <article class="container section post">
+    {cover && <img class="cover card" src={cover} alt={post.coverImage?.alt || post.title} />}
+
+    <header class="intro">
+      {post.category?.title && <p class="category">{post.category.title}</p>}
+      <h1>{post.title}</h1>
+      {post.excerpt && <p class="excerpt">{post.excerpt}</p>}
+      <p class="meta">
+        <span>{formatDate(post.publishedAt)}</span>
+        {post.author?.name && <span> · {post.author.name}</span>}
+      </p>
+    </header>
+
+    <div class="prose">
+      <PortableText value={post.body} />
+    </div>
+
+    {(post.previousPost || post.nextPost) && (
+      <nav class="post-nav" aria-label="Navegación de artículos">
+        {post.previousPost ? (
+          <a href={`/blog/${post.previousPost.slug}`}>
+            ← {post.previousPost.title}
+          </a>
+        ) : (
+          <span />
+        )}
+        {post.nextPost && <a href={`/blog/${post.nextPost.slug}`}>{post.nextPost.title} →</a>}
+      </nav>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    max-width: 820px;
+  }
+
+  .cover {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: 1.25rem;
+  }
+
+  .intro h1 {
+    margin: 0.2rem 0 0.6rem;
+    line-height: 1.1;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+  }
+
+  .category {
+    margin: 0;
+    color: var(--accent);
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+
+  .excerpt {
+    margin: 0;
+    color: var(--muted);
+    font-size: 1.06rem;
+  }
+
+  .meta {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .post-nav {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    gap: 0.8rem;
+    font-weight: 700;
+  }
+</style>

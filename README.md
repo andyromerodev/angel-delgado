@@ -1,92 +1,134 @@
-# Clean Astro + Sanity app
+# Erislaine Landing Page (Astro + Sanity + pnpm)
 
-This template includes an [Astro](https://astro.build/) app with a [Sanity Studio](https://www.sanity.io/) – an open-source React application that connects to your Sanity project’s hosted dataset. The Studio is configured locally and can then be deployed for content collaboration.
+Base profesional para una landing page + blog administrable con Sanity Studio.
 
-## Features
+## Stack
 
-- Fetch content as data from [the Sanity Content Lake](https://www.sanity.io/docs/datastore)
-- Render block content with [Portable Text](https://www.sanity.io/docs/presenting-block-text)
-- Manage and create content with the intuitive [Sanity Studio](https://www.sanity.io/docs/sanity-studio).
-- Crop and render images with [Sanity Image URLs](https://www.sanity.io/docs/presenting-images)
+- Astro (frontend)
+- Sanity Studio (CMS)
+- TypeScript
+- GROQ
+- Portable Text
+- pnpm workspaces
 
-## Demo
+## Estructura
 
-https://template-astro-clean.sanity.build
-
-## Getting Started
-
-### Install the template
-
-#### 1. Initialize template with Sanity CLI
-
-Run the command in your Terminal to initialize this template on your local computer.
-
-See the documentation if you are [having issues with the CLI](https://www.sanity.io/help/cli-errors).
-
-```shell
-npm create sanity@latest -- --template sanity-io/sanity-template-astro-clean
+```txt
+.
+├── astro-app/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── blog/
+│   │   │   ├── landing/
+│   │   │   └── layout/
+│   │   ├── layouts/
+│   │   ├── lib/
+│   │   │   ├── sanity/
+│   │   │   └── utils/
+│   │   ├── pages/
+│   │   │   ├── blog/
+│   │   │   │   ├── [slug].astro
+│   │   │   │   └── index.astro
+│   │   │   ├── index.astro
+│   │   │   └── studio.astro
+│   │   └── styles/
+│   ├── astro.config.mjs
+│   └── package.json
+├── studio/
+│   ├── scripts/
+│   │   └── seed.ts
+│   ├── src/
+│   │   ├── schemaTypes/
+│   │   │   ├── documents/
+│   │   │   │   ├── author.ts
+│   │   │   │   ├── category.ts
+│   │   │   │   ├── landingPage.ts
+│   │   │   │   ├── post.ts
+│   │   │   │   └── siteSettings.ts
+│   │   │   ├── objects/
+│   │   │   │   └── blockContent.tsx
+│   │   │   └── index.ts
+│   │   └── structure.ts
+│   ├── sanity.config.ts
+│   └── package.json
+├── package.json
+└── pnpm-workspace.yaml
 ```
 
-#### 2. Run Studio and Astro app locally
+## Variables de entorno
 
-Navigate to the template directory using `cd <your app name>`, and start the development servers by running the following command
+### `astro-app/.env`
 
-```shell
-npm run dev
+```bash
+PUBLIC_SITE_URL="https://tu-dominio.com"
+PUBLIC_SANITY_PROJECT_ID="tu-project-id"
+PUBLIC_SANITY_DATASET="production"
+PUBLIC_STUDIO_URL="http://localhost:3333"
 ```
 
-#### 3. Open the app and sign in to the Studio
+### `studio/.env`
 
-Open the Astro app running locally in your browser on [http://localhost:4321](http://localhost:4321).
-
-Open the Studio running locally in your browser on [http://localhost:3333](http://localhost:3333). You should now see a screen prompting you to log in to the Studio. Use the same service (Google, GitHub, or email) that you used when you logged in to the CLI.
-
-### Adding content with Sanity
-
-#### 1. Publish your first document
-
-The template comes pre-defined with a schema containing a `Post` document type.
-
-From the Studio, click "+ Create" and select the `Post` document type. Go ahead and create and publish the document.
-
-Your content should now appear in your Astro app ([http://localhost:4321](http://localhost:4321))
-
-#### 2. Extending the Sanity schema
-
-The schema for the `Post` document type is defined in the `studio/src/schemaTypes/post.ts` file. You can [add more document types](https://www.sanity.io/docs/schema-types) to the schema to suit your needs.
-
-### Deploying your application and inviting editors
-
-#### 1. Deploy Sanity Studio
-
-Your Astro frontend (`/astro-app`) and Sanity Studio (`/studio`) are still only running on your local computer.
-
-Back in your Studio directory (`/studio`), run the following command to deploy your Sanity Studio.
-
-```shell
-cd studio/
-npx sanity deploy
+```bash
+SANITY_STUDIO_PROJECT_ID="tu-project-id"
+SANITY_STUDIO_DATASET="production"
+SANITY_STUDIO_STUDIO_HOST=""
 ```
 
-#### 2. Deploy Astro app to Vercel
+## Instalación y desarrollo
 
-You have the freedom to deploy your Astro app to your hosting provider of choice. With Vercel and GitHub being a popular choice, we'll cover the basics of that approach.
+```bash
+pnpm install
+pnpm dev
+```
 
-1. Create a GitHub repository from this project. [Learn more](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github).
-2. Create a new Vercel project and connect it to your Github repository.
-3. Set the `Root Directory` to your Astro app.
-4. Configure your Environment Variables.
+- Astro: [http://localhost:4321](http://localhost:4321)
+- Sanity Studio: [http://localhost:3333](http://localhost:3333)
+- Ruta en Astro para acceder al panel: [http://localhost:4321/studio](http://localhost:4321/studio)
 
-#### 3. Invite a collaborator
+## Seed de contenido inicial
 
-Now that you’ve deployed your Astro application and Sanity Studio, you can optionally invite a collaborator to your Studio. Open up [Manage](https://www.sanity.io/manage), select your project and click "Invite project members"
+Incluye:
 
-They will be able to access the deployed Studio, where you can collaborate together on creating content.
+- 1 `landingPage`
+- 1 `siteSettings`
+- 2 `category`
+- 2 `author`
+- 3 `post`
 
-## Resources
+Ejecuta:
 
-- [Sanity documentation](https://www.sanity.io/docs/)
-- [Astro documentation](https://docs.astro.build/en/getting-started/)
-- [Join the Sanity Community](https://slack.sanity.io)
-- [Learn Sanity](https://www.sanity.io/learn)
-- [Add Visual Editing (Presentation) to your project](https://www.sanity.io/guides/sanity-astro-blog)
+```bash
+pnpm seed
+```
+
+> Requiere sesión iniciada en Sanity CLI (`sanity login`) porque el script usa `--with-user-token`.
+
+## Scripts útiles
+
+```bash
+pnpm dev
+pnpm dev:app
+pnpm dev:studio
+pnpm build
+pnpm build:app
+pnpm build:studio
+pnpm preview
+pnpm check
+pnpm seed
+```
+
+## Flujo editorial (cliente)
+
+1. Abrir Sanity Studio.
+2. Editar `Landing Page` o `Posts`.
+3. En posts: completar `title`, `slug`, `excerpt`, `publishedAt`, `author`, `category`, `coverImage`, `body`.
+4. Publicar con `Publish`.
+
+## Antes de desplegar en Netlify
+
+1. Configura variables de entorno del frontend en Netlify (`PUBLIC_SITE_URL`, `PUBLIC_SANITY_PROJECT_ID`, `PUBLIC_SANITY_DATASET`, `PUBLIC_STUDIO_URL`).
+2. Usa `astro-app` como base de build del frontend.
+3. Verifica `pnpm build` sin errores.
+4. Confirma que el contenido de Sanity está publicado (no draft).
+5. Si vas a desplegar Studio por separado, ejecuta desde `studio`: `pnpm deploy`.
+

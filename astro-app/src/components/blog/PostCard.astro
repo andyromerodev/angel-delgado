@@ -1,0 +1,77 @@
+---
+import {imageUrl} from '../../lib/sanity/image'
+import {formatDate} from '../../lib/utils/date'
+import type {BlogListItem} from '../../lib/sanity/types'
+
+interface Props {
+  post: BlogListItem
+}
+
+const {post} = Astro.props
+const cover = imageUrl(post.coverImage)?.width(900).height(520).fit('crop').url()
+---
+
+<article class="card post-card">
+  <a href={`/blog/${post.slug}`} class="post-link" aria-label={`Leer ${post.title}`}>
+    {cover ? (
+      <img src={cover} alt={post.coverImage?.alt || post.title} loading="lazy" />
+    ) : (
+      <div class="placeholder" aria-hidden="true" />
+    )}
+    <div class="content">
+      {post.category?.title && <p class="category">{post.category.title}</p>}
+      <h2>{post.title}</h2>
+      {post.excerpt && <p class="excerpt">{post.excerpt}</p>}
+      <p class="meta">{formatDate(post.publishedAt)}</p>
+    </div>
+  </a>
+</article>
+
+<style>
+  .post-card {
+    overflow: hidden;
+  }
+
+  .post-link {
+    display: block;
+    text-decoration: none;
+  }
+
+  img,
+  .placeholder {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    object-fit: cover;
+    background: linear-gradient(140deg, #daf5f1, #f3f6ff);
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .category {
+    margin: 0;
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  h2 {
+    margin: 0.3rem 0 0.6rem;
+    line-height: 1.2;
+    font-size: 1.15rem;
+  }
+
+  .excerpt {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .meta {
+    margin: 0.9rem 0 0;
+    font-size: 0.84rem;
+    color: var(--muted);
+  }
+</style>

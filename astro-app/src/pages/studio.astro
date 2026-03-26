@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import {getLandingPage, getSiteSettings} from '../lib/sanity/api'
+
+const [landing, siteSettings] = await Promise.all([getLandingPage(), getSiteSettings()])
+const studioUrl = import.meta.env.PUBLIC_STUDIO_URL || 'http://localhost:3333'
+const siteTitle = siteSettings?.siteName || landing?.siteTitle || 'Erislaine'
+---
+
+<BaseLayout
+  title="Sanity Studio"
+  description="Acceso al panel de administración"
+  siteTitle={siteTitle}
+  footerText={landing?.footerText}
+  contactEmail={landing?.contactEmail}
+  contactWhatsApp={landing?.contactWhatsApp}
+  noIndex={true}
+>
+  <section class="container section studio">
+    <h1 class="section-title">Panel de administración</h1>
+    <p class="section-subtitle">
+      El Studio está en una app separada para mantener un flujo profesional de edición.
+    </p>
+    <a class="studio-link" href={studioUrl} target="_blank" rel="noreferrer">Abrir Sanity Studio</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .studio {
+    max-width: 720px;
+  }
+
+  .studio-link {
+    margin-top: 1rem;
+    display: inline-flex;
+    background: var(--accent);
+    color: white;
+    padding: 0.65rem 1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+  }
+</style>

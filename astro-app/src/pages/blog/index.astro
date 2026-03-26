@@ -1,0 +1,54 @@
+---
+import PostCard from '../../components/blog/PostCard.astro'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import {createSeo} from '../../lib/seo'
+import {getBlogPosts, getLandingPage, getSiteSettings} from '../../lib/sanity/api'
+
+const [posts, landing, siteSettings] = await Promise.all([getBlogPosts(), getLandingPage(), getSiteSettings()])
+
+const seo = createSeo({
+  title: siteSettings?.defaultSeoTitle ? `Blog | ${siteSettings.defaultSeoTitle}` : 'Blog',
+  description: siteSettings?.defaultSeoDescription || 'Artículos sobre estrategia digital, contenido y crecimiento.',
+  fallbackTitle: 'Blog',
+  fallbackDescription: 'Artículos sobre estrategia digital, contenido y crecimiento.',
+})
+
+const siteTitle = siteSettings?.siteName || landing?.siteTitle || 'Erislaine'
+---
+
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  siteTitle={siteTitle}
+  footerText={landing?.footerText}
+  contactEmail={landing?.contactEmail}
+  contactWhatsApp={landing?.contactWhatsApp}
+>
+  <section class="container section">
+    <h1 class="section-title">Blog</h1>
+    <p class="section-subtitle">Notas, guías y recursos para mejorar presencia digital y conversión.</p>
+
+    {
+      posts.length > 0 ? (
+        <div class="grid cols-3 blog-grid">
+          {posts.map((post) => (
+            <PostCard post={post} />
+          ))}
+        </div>
+      ) : (
+        <p class="empty">Todavía no hay artículos publicados.</p>
+      )
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-grid {
+    margin-top: 1rem;
+  }
+
+  .empty {
+    margin-top: 1rem;
+    color: var(--muted);
+  }
+</style>
