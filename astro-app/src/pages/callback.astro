@@ -37,6 +37,9 @@
     <script>
       const statusEl = document.getElementById('status');
       const detailEl = document.getElementById('detail');
+      if (!(statusEl instanceof HTMLElement) || !(detailEl instanceof HTMLElement)) {
+        throw new Error('No se pudieron encontrar los elementos del callback.');
+      }
       const params = new URLSearchParams(window.location.search);
       const url = params.get('url');
 
