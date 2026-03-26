@@ -7,6 +7,9 @@
     "start": "astro dev",
     "build": "astro check && tsc --noEmit && astro build",
     "preview": "astro preview",
+    "cf:preview": "pnpm build && wrangler dev",
+    "cf:deploy": "pnpm build && wrangler deploy",
+    "cf:typegen": "wrangler types",
     "check": "astro check",
     "typecheck": "tsc --noEmit",
     "astro": "astro"
@@ -28,6 +31,7 @@
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.9.3",
-    "vite": "^5.4.21"
+    "vite": "^5.4.21",
+    "wrangler": "^4.77.0"
   }
 }
