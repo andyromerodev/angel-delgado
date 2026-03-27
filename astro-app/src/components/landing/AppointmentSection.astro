@@ -1,0 +1,329 @@
+---
+import type {LandingViewModel} from '../../lib/landing/view-model'
+
+interface Props {
+  appointment: LandingViewModel['appointment']
+}
+
+const {appointment} = Astro.props
+---
+
+<section class="section-appointment" id="agendar">
+  <div class="container">
+    <div class="appointment-grid">
+      <aside class="contact-pane">
+        <h2>{appointment.contactTitle}</h2>
+        <p>{appointment.contactDescription}</p>
+        <div class="contact-list">
+          {appointment.contactItems.map((item) => (
+            <article>
+              <p class="contact-icon">{item.iconName}</p>
+              <div>
+                <p class="contact-label">{item.label}</p>
+                <p class="contact-value">{item.value}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div class="schedule">
+          <p class="schedule-title">{appointment.scheduleTitle}</p>
+          {appointment.scheduleItems.map((line) => (
+            <p class="schedule-line">{line}</p>
+          ))}
+        </div>
+      </aside>
+
+      <div class="form-pane">
+        <h3>{appointment.formTitle}</h3>
+        <p>{appointment.formSubtitle}</p>
+        <form class="appointment-form" data-appointment-form novalidate>
+          <label>
+            <span>{appointment.fullNameLabel}</span>
+            <input name="fullName" type="text" placeholder={appointment.fullNamePlaceholder} required />
+          </label>
+          <label>
+            <span>{appointment.emailLabel}</span>
+            <input name="email" type="email" placeholder={appointment.emailPlaceholder} required />
+          </label>
+          <label>
+            <span>{appointment.phoneLabel}</span>
+            <input
+              name="phone"
+              type="tel"
+              placeholder={appointment.phonePlaceholder}
+              pattern="^[+0-9\\s()-]{7,}$"
+              required
+            />
+          </label>
+          <label>
+            <span>{appointment.consultTypeLabel}</span>
+            <select name="consultType" required>
+              <option value="">{appointment.consultTypePlaceholder}</option>
+              {appointment.consultTypeOptions.map((option) => (
+                <option value={option}>{option}</option>
+              ))}
+            </select>
+          </label>
+          <label class="full">
+            <span>{appointment.messageLabel}</span>
+            <textarea name="message" rows={4} placeholder={appointment.messagePlaceholder}></textarea>
+          </label>
+          <div class="full form-actions">
+            <button class="btn btn-tertiary" type="submit">{appointment.submitText}</button>
+            <p class="form-status" data-form-status aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  const forms = document.querySelectorAll('[data-appointment-form]')
+
+  forms.forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault()
+      const statusEl = form.querySelector('[data-form-status]')
+      if (!(statusEl instanceof HTMLElement)) return
+
+      if (!form.checkValidity()) {
+        statusEl.textContent = 'Revisa los campos obligatorios para continuar.'
+        form.reportValidity()
+        return
+      }
+
+      statusEl.textContent = 'Solicitud validada. Integración de envío pendiente en la próxima iteración.'
+      form.reset()
+    })
+  })
+</script>
+
+<style>
+  .section-appointment {
+    background: var(--surface-container);
+    padding: 3.6rem 0;
+  }
+
+  .appointment-grid {
+    background: var(--surface-container-lowest);
+    border-radius: 1.4rem;
+    overflow: hidden;
+    display: grid;
+  }
+
+  .contact-pane {
+    background: var(--primary);
+    color: var(--on-primary);
+    padding: 1.5rem;
+    order: 2;
+  }
+
+  .contact-pane h2 {
+    margin: 0 0 0.8rem;
+    font-size: 1.7rem;
+  }
+
+  .contact-pane > p {
+    margin: 0;
+    color: color-mix(in srgb, var(--on-primary) 86%, transparent);
+  }
+
+  .contact-list {
+    margin-top: 1.6rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .contact-list article {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+  }
+
+  .contact-icon {
+    margin: 0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    opacity: 0.9;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .contact-label {
+    margin: 0;
+    font-weight: 700;
+    font-size: 0.94rem;
+  }
+
+  .contact-value {
+    margin: 0.2rem 0 0;
+    color: color-mix(in srgb, var(--on-primary) 86%, transparent);
+    font-size: 0.9rem;
+    word-break: break-word;
+  }
+
+  .schedule {
+    margin-top: 1.8rem;
+    padding-top: 1rem;
+    background: color-mix(in srgb, var(--on-primary) 9%, transparent);
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+
+  .schedule-title {
+    margin: 0 0 0.5rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+  }
+
+  .schedule-line {
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+  }
+
+  .form-pane {
+    padding: 1.5rem;
+    order: 1;
+  }
+
+  .form-pane h3 {
+    margin: 0;
+    font-size: 1.7rem;
+  }
+
+  .form-pane > p {
+    margin: 0.6rem 0 0;
+    color: var(--on-surface-variant);
+  }
+
+  .appointment-form {
+    margin-top: 1.4rem;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .appointment-form label {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .appointment-form span {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--on-surface-variant);
+    font-weight: 700;
+  }
+
+  .appointment-form input,
+  .appointment-form select,
+  .appointment-form textarea {
+    width: 100%;
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
+    background: var(--surface-container-highest);
+    color: var(--on-surface);
+    padding: 0.8rem 0.95rem;
+    font: inherit;
+    font-size: 16px;
+  }
+
+  .appointment-form input:focus,
+  .appointment-form select:focus,
+  .appointment-form textarea:focus {
+    outline: none;
+    border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+  }
+
+  .appointment-form .full {
+    grid-column: 1 / -1;
+  }
+
+  .form-actions {
+    display: grid;
+    gap: 0.55rem;
+    align-items: start;
+  }
+
+  .form-actions .btn-tertiary {
+    width: 100%;
+  }
+
+  .form-status {
+    margin: 0;
+    color: var(--on-surface-variant);
+    min-height: 1.3rem;
+    font-size: 0.88rem;
+  }
+
+  @media (max-width: 919px) {
+    .section-appointment {
+      padding: var(--mobile-section-space) 0;
+      background: var(--surface);
+    }
+
+    .appointment-grid {
+      border-radius: 1.25rem;
+      box-shadow: none;
+      gap: 0.7rem;
+      background: transparent;
+      overflow: visible;
+    }
+
+    .form-pane {
+      background: var(--surface-container-lowest);
+      border-radius: 1.25rem;
+      padding: 1rem;
+    }
+
+    .contact-pane {
+      border-radius: 1.25rem;
+      padding: 1.1rem;
+    }
+
+    .contact-pane h2,
+    .form-pane h3 {
+      font-size: 1.35rem;
+    }
+
+    .appointment-form {
+      gap: 0.75rem;
+    }
+
+    .appointment-form span {
+      font-size: 0.66rem;
+    }
+  }
+
+  @media (min-width: 920px) {
+    .section-appointment {
+      padding: 4.5rem 0;
+    }
+
+    .appointment-grid {
+      grid-template-columns: 0.95fr 1.4fr;
+      border-radius: 2rem;
+    }
+
+    .contact-pane,
+    .form-pane {
+      padding: 2.2rem;
+    }
+
+    .contact-pane,
+    .form-pane {
+      order: unset;
+    }
+
+    .appointment-form {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .form-actions .btn-tertiary {
+      width: auto;
+    }
+  }
+</style>

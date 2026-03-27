@@ -1,14 +1,34 @@
 :root {
-  --bg: #f8f8f4;
-  --surface: #ffffff;
-  --text: #1a1f22;
+  --background: #f7fafe;
+  --surface: #f7fafe;
+  --surface-container-low: #f1f4f8;
+  --surface-container: #ebeef2;
+  --surface-container-highest: #e0e3e7;
+  --surface-container-lowest: #ffffff;
+  --primary: #005f73;
+  --primary-container: #2d788c;
+  --primary-fixed: #b2ebff;
+  --secondary: #2b6958;
+  --secondary-container: #aeedd7;
+  --on-secondary-container: #0b5040;
+  --tertiary: #735c00;
+  --tertiary-fixed: #ffe088;
+  --on-tertiary-fixed: #241a00;
+  --on-primary: #ffffff;
+  --on-surface: #181c1f;
+  --on-surface-variant: #3e494a;
+  --outline-variant: #bdc9ca;
   --muted: #5e676f;
-  --line: #dde1e6;
-  --accent: #0f766e;
-  --accent-soft: #d7f2ef;
-  --radius: 14px;
-  --shadow: 0 12px 30px rgba(8, 24, 30, 0.08);
+  --line: #dbe4ea;
+  --bg: var(--background);
+  --font-headline: 'Manrope', 'Segoe UI', sans-serif;
+  --font-body: 'Work Sans', 'Segoe UI', sans-serif;
+  --radius-lg: 1.5rem;
+  --radius-mobile-card: 1.35rem;
+  --shadow-soft: 0 14px 32px rgba(24, 28, 31, 0.06);
+  --shadow-elevated: 0 24px 42px rgba(24, 28, 31, 0.1);
   --container: min(1120px, 92vw);
+  --mobile-section-space: 3.2rem;
 }
 
 * {
@@ -21,10 +41,14 @@ body {
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: radial-gradient(circle at top right, #eef9f7, var(--bg) 40%);
-  color: var(--text);
-  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top right, #dff2fb 0%, var(--background) 42%);
+  color: var(--on-surface);
+  font-family: var(--font-body);
   line-height: 1.6;
 }
 
@@ -35,7 +59,6 @@ img {
 
 a {
   color: inherit;
-  text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
 .container {
@@ -43,37 +66,83 @@ a {
   margin: 0 auto;
 }
 
-.section {
-  margin: 3rem auto;
+@media (max-width: 640px) {
+  :root {
+    --container: min(1120px, 94vw);
+    --mobile-section-space: 2.9rem;
+  }
+
+  .btn {
+    width: 100%;
+    min-height: 44px;
+  }
 }
 
-.section-title {
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
-  margin: 0 0 1rem;
-  letter-spacing: -0.015em;
+.section-heading h2 {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-headline);
+  letter-spacing: -0.02em;
+  font-size: clamp(1.7rem, 4.8vw, 3rem);
+  line-height: 1.08;
 }
 
-.section-subtitle {
-  color: var(--muted);
+.section-heading.center {
+  text-align: center;
+}
+
+.eyebrow {
   margin: 0;
-  max-width: 70ch;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--secondary);
 }
 
-.grid {
-  display: grid;
-  gap: 1rem;
+.text-gradient {
+  background: linear-gradient(90deg, var(--primary), var(--primary-container));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 999px;
+  font-weight: 700;
+  font-family: var(--font-headline);
+  padding: 0.76rem 1.25rem;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  color: var(--on-primary);
+  background: linear-gradient(130deg, var(--primary), var(--primary-container));
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-ghost {
+  background: var(--surface-container-lowest);
+  color: var(--on-surface);
+}
+
+.btn-tertiary {
+  border: 0;
+  background: var(--tertiary);
+  color: #fff;
+  cursor: pointer;
 }
 
 .prose {
   max-width: 74ch;
-  color: var(--text);
+  color: var(--on-surface);
 }
 
 .prose h2,
@@ -91,16 +160,6 @@ a {
 
 .prose blockquote {
   margin: 1.5rem 0;
-  border-left: 4px solid var(--accent);
+  border-left: 4px solid var(--primary);
   padding-left: 1rem;
-}
-
-@media (min-width: 760px) {
-  .grid.cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .grid.cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }

@@ -1,9 +1,11 @@
 ---
-import Faq from '../components/landing/Faq.astro'
-import Hero from '../components/landing/Hero.astro'
-import InfoGrid from '../components/landing/InfoGrid.astro'
-import Testimonials from '../components/landing/Testimonials.astro'
+import AboutSection from '../components/landing/AboutSection.astro'
+import AppointmentSection from '../components/landing/AppointmentSection.astro'
+import FloatingCta from '../components/landing/FloatingCta.astro'
+import HeroSection from '../components/landing/HeroSection.astro'
+import ServicesShowcase from '../components/landing/ServicesShowcase.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
+import {mapLandingToViewModel} from '../lib/landing/mapper'
 import {createSeo} from '../lib/seo'
 import {getLandingPage, getSiteSettings} from '../lib/sanity/api'
 
@@ -21,45 +23,21 @@ const seo = createSeo({
     landing.siteDescription || siteSettings?.defaultSeoDescription || 'Sitio profesional construido con Astro + Sanity',
 })
 
-const siteTitle = siteSettings?.siteName || landing.siteTitle || 'Erislaine'
+const vm = mapLandingToViewModel(landing)
+const siteTitle = siteSettings?.siteName || vm.siteTitle || 'Erislaine'
 ---
 
 <BaseLayout
   title={seo.title}
   description={seo.description}
   siteTitle={siteTitle}
-  footerText={landing.footerText}
-  contactEmail={landing.contactEmail}
-  contactWhatsApp={landing.contactWhatsApp}
+  footerText={vm.footerText}
+  contactEmail={vm.contactEmail}
+  contactWhatsApp={vm.contactWhatsApp}
 >
-  <Hero
-    title={landing.heroTitle}
-    subtitle={landing.heroSubtitle}
-    primaryText={landing.heroCtaText}
-    primaryLink={landing.heroCtaLink}
-    secondaryText={landing.heroSecondaryCtaText}
-    secondaryLink={landing.heroSecondaryCtaLink}
-    image={landing.heroImage}
-  />
-
-  {landing.services?.length > 0 && (
-    <InfoGrid
-      title="Servicios de otorrinolaringología"
-      subtitle="Atención integral de oído, nariz y garganta en consulta ambulatoria para niños y adultos."
-      items={landing.services}
-      columns={3}
-    />
-  )}
-
-  {landing.benefits?.length > 0 && (
-    <InfoGrid
-      title="Por qué elegir a la Dra. Erislaine Tamayo"
-      subtitle="Evaluación clínica precisa, seguimiento cercano y recomendaciones claras para cada paciente."
-      items={landing.benefits}
-      columns={2}
-    />
-  )}
-
-  {landing.testimonials?.length > 0 && <Testimonials items={landing.testimonials} />}
-  {landing.faq?.length > 0 && <Faq items={landing.faq} />}
+  <HeroSection hero={vm.hero} />
+  <ServicesShowcase services={vm.services} />
+  <AboutSection about={vm.about} />
+  <AppointmentSection appointment={vm.appointment} />
+  <FloatingCta cta={vm.floatingCta} />
 </BaseLayout>

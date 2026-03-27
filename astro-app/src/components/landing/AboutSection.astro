@@ -1,0 +1,169 @@
+---
+import {imageUrl} from '../../lib/sanity/image'
+import type {LandingViewModel} from '../../lib/landing/view-model'
+
+interface Props {
+  about: LandingViewModel['about']
+}
+
+const {about} = Astro.props
+const image =
+  imageUrl(about.image)?.width(900).height(1100).fit('crop').url() ||
+  'https://images.unsplash.com/photo-1659353887215-24ec56f6028a?auto=format&fit=crop&w=900&q=80'
+---
+
+<section class="section-about" id="sobre-mi">
+  <div class="container about-grid">
+    <div class="about-content">
+      <p class="eyebrow">{about.eyebrow}</p>
+      <h2>{about.title}</h2>
+      <div class="about-copy">
+        {about.paragraphs.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </div>
+    </div>
+    <div class="about-image-wrap">
+      <img src={image} alt={about.image?.alt || 'Dra. Erislaine Tamayo en consulta'} loading="lazy" />
+    </div>
+    <div class="stat-grid">
+      {about.stats.map((stat) => (
+        <article>
+          <p class="stat-value">{stat.value}</p>
+          <p class="stat-label">{stat.label}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-about {
+    background: var(--surface);
+    padding: 3.6rem 0;
+  }
+
+  .about-grid {
+    display: grid;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  .about-image-wrap {
+    border-radius: 1.75rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-elevated);
+    min-height: 300px;
+  }
+
+  .about-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-content {
+    display: grid;
+    gap: 0;
+  }
+
+  h2 {
+    margin: 0.8rem 0 1rem;
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .about-copy {
+    display: grid;
+    gap: 1rem;
+    color: var(--on-surface-variant);
+  }
+
+  .about-copy p {
+    margin: 0;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .stat-grid article {
+    background: var(--surface-container-lowest);
+    border-radius: var(--radius-mobile-card);
+    padding: 0.9rem;
+  }
+
+  .stat-value {
+    margin: 0;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: var(--primary);
+    font-weight: 800;
+    font-family: var(--font-headline);
+  }
+
+  .stat-label {
+    margin: 0.25rem 0 0;
+    color: var(--on-surface-variant);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 919px) {
+    .section-about {
+      padding: var(--mobile-section-space) 0;
+      background: var(--surface-container-low);
+    }
+
+    h2 {
+      font-size: clamp(1.9rem, 7.2vw, 2.75rem);
+      margin-bottom: 0.85rem;
+    }
+
+    .about-copy {
+      gap: 0.85rem;
+      font-size: 1.02rem;
+      line-height: 1.58;
+    }
+
+    .about-image-wrap {
+      min-height: 260px;
+      border-radius: var(--radius-mobile-card);
+    }
+  }
+
+  @media (min-width: 920px) {
+    .section-about {
+      padding: 4.5rem 0;
+    }
+
+    .about-grid {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 3.2rem;
+      align-items: center;
+    }
+
+    .about-content {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .about-image-wrap {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+    }
+
+    .stat-grid {
+      grid-column: 2;
+      grid-row: 2;
+      margin-top: 1.5rem;
+    }
+
+    .stat-grid article {
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+    }
+  }
+</style>
