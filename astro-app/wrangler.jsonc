@@ -1,13 +1,8 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "erislaine-astro-app",
+  "name": "erislaine-landing-page",
+  "pages_build_output_dir": "dist",
   "compatibility_date": "2026-03-26",
-  "main": "dist/_worker.js/index.js",
-  "compatibility_flags": ["nodejs_compat"],
-  "assets": {
-    "binding": "ASSETS",
-    "directory": "dist"
-  },
   "observability": {
     "enabled": true
   }

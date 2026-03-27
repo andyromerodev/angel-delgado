@@ -1,4 +1,7 @@
 ---
+import {imageUrl} from '../../lib/sanity/image'
+import type {SanityImage} from '../../lib/sanity/types'
+
 interface Props {
   title: string
   subtitle?: string
@@ -6,57 +9,91 @@ interface Props {
   primaryLink?: string
   secondaryText?: string
   secondaryLink?: string
+  image?: SanityImage
 }
 
-const {title, subtitle, primaryText, primaryLink, secondaryText, secondaryLink} = Astro.props
+const {title, subtitle, primaryText, primaryLink, secondaryText, secondaryLink, image} = Astro.props
+
+const doctorImageUrl =
+  imageUrl(image)?.width(900).height(1080).fit('crop').url() ||
+  'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=900&q=80'
 ---
 
 <section class="container section hero">
-  <div class="hero-copy">
-    <p class="eyebrow">Estrategia digital + ejecución</p>
-    <h1>{title}</h1>
-    {subtitle && <p class="section-subtitle">{subtitle}</p>}
-    <div class="actions">
-      {primaryText && primaryLink && (
-        <a class="btn btn-primary" href={primaryLink}>
-          {primaryText}
-        </a>
-      )}
-      {secondaryText && secondaryLink && (
-        <a class="btn btn-ghost" href={secondaryLink}>
-          {secondaryText}
-        </a>
-      )}
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Otorrinolaringología en Tarapoto, Perú</p>
+      <h1>{title}</h1>
+      {subtitle && <p class="section-subtitle">{subtitle}</p>}
+      <div class="actions">
+        {primaryText && primaryLink && (
+          <a class="btn btn-primary" href={primaryLink}>
+            {primaryText}
+          </a>
+        )}
+        {secondaryText && secondaryLink && (
+          <a class="btn btn-ghost" href={secondaryLink}>
+            {secondaryText}
+          </a>
+        )}
+      </div>
+      <p class="helper-text">Si deseas usar la foto oficial de la Dra. Erislaine Tamayo, súbela en el campo Hero image del Studio.</p>
+    </div>
+
+    <div class="hero-photo card">
+      <img
+        src={doctorImageUrl}
+        alt={image?.alt || 'Doctora especialista en otorrinolaringología'}
+        loading="eager"
+      />
     </div>
   </div>
 </section>
 
 <style>
   .hero {
-    padding-top: 2rem;
+    padding-top: 1.5rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    gap: 1rem;
+    align-items: stretch;
   }
 
   .hero-copy {
-    background: linear-gradient(110deg, #ffffff, #ecfbf7);
+    background: linear-gradient(170deg, #ffffff, #f1f4f5);
     border: 1px solid var(--line);
     border-radius: calc(var(--radius) + 4px);
-    padding: clamp(1.5rem, 4vw, 3rem);
+    padding: clamp(1.25rem, 4vw, 2.75rem);
     box-shadow: var(--shadow);
+  }
+
+  .hero-photo {
+    overflow: hidden;
+    min-height: 280px;
+  }
+
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
   }
 
   .eyebrow {
     margin: 0;
-    color: var(--accent);
+    color: #4c5963;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    font-size: 0.74rem;
+    font-size: 0.72rem;
   }
 
   h1 {
     margin: 0.75rem 0;
     line-height: 1.1;
-    font-size: clamp(1.9rem, 4.8vw, 3.4rem);
+    font-size: clamp(1.9rem, 4.8vw, 3.1rem);
     letter-spacing: -0.02em;
   }
 
@@ -65,6 +102,12 @@ const {title, subtitle, primaryText, primaryLink, secondaryText, secondaryLink} 
     flex-wrap: wrap;
     gap: 0.75rem;
     margin-top: 1.2rem;
+  }
+
+  .helper-text {
+    margin: 0.9rem 0 0;
+    color: var(--muted);
+    font-size: 0.86rem;
   }
 
   .btn {
@@ -84,12 +127,19 @@ const {title, subtitle, primaryText, primaryLink, secondaryText, secondaryLink} 
   }
 
   .btn-primary {
-    background: var(--accent);
+    background: #0f1720;
     color: white;
   }
 
   .btn-ghost {
     border-color: var(--line);
     background: white;
+  }
+
+  @media (min-width: 860px) {
+    .hero-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+      min-height: 500px;
+    }
   }
 </style>

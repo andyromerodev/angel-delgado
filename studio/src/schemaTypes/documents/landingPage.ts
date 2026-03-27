@@ -26,7 +26,7 @@ export default defineType({
       type: 'text',
       rows: 3,
       group: 'general',
-      description: 'Resumen corto del negocio para la home.',
+      description: 'Resumen corto del consultorio para la home.',
     }),
     defineField({
       name: 'heroTitle',
@@ -41,6 +41,22 @@ export default defineType({
       type: 'text',
       rows: 3,
       group: 'hero',
+    }),
+    defineField({
+      name: 'heroImage',
+      title: 'Hero image',
+      type: 'image',
+      group: 'hero',
+      options: {hotspot: true},
+      description: 'Foto principal de la doctora. Idealmente en retrato y con fondo neutro.',
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alternative text',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        }),
+      ],
     }),
     defineField({
       name: 'heroCtaText',
@@ -174,7 +190,7 @@ export default defineType({
       title: 'Contact WhatsApp link',
       type: 'url',
       group: 'contact',
-      description: 'Ejemplo: https://wa.me/5355555555',
+      description: 'Ejemplo: https://wa.me/51999999999',
     }),
     defineField({
       name: 'contactEmail',
@@ -209,6 +225,7 @@ export default defineType({
     select: {
       title: 'siteTitle',
       subtitle: 'heroTitle',
+      media: 'heroImage',
     },
   },
 })

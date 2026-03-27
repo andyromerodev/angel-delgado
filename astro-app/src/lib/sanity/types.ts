@@ -57,6 +57,7 @@ export interface LandingPage {
   heroCtaLink?: string
   heroSecondaryCtaText?: string
   heroSecondaryCtaLink?: string
+  heroImage?: SanityImage
   services: Array<{
     title: string
     description: string

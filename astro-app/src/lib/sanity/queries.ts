@@ -10,6 +10,7 @@ export const landingPageQuery = groq`
     heroCtaLink,
     heroSecondaryCtaText,
     heroSecondaryCtaLink,
+    "heroImage": heroImage{alt, asset},
     services[]{title, description, iconName},
     benefits[]{title, description},
     testimonials[]{name, role, quote},

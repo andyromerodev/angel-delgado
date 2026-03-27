@@ -8,9 +8,12 @@ const [posts, landing, siteSettings] = await Promise.all([getBlogPosts(), getLan
 
 const seo = createSeo({
   title: siteSettings?.defaultSeoTitle ? `Blog | ${siteSettings.defaultSeoTitle}` : 'Blog',
-  description: siteSettings?.defaultSeoDescription || 'Artículos sobre estrategia digital, contenido y crecimiento.',
+  description:
+    siteSettings?.defaultSeoDescription ||
+    'Artículos médicos sobre oído, nariz y garganta para prevención, diagnóstico oportuno y cuidado diario.',
   fallbackTitle: 'Blog',
-  fallbackDescription: 'Artículos sobre estrategia digital, contenido y crecimiento.',
+  fallbackDescription:
+    'Artículos médicos sobre oído, nariz y garganta para prevención, diagnóstico oportuno y cuidado diario.',
 })
 
 const siteTitle = siteSettings?.siteName || landing?.siteTitle || 'Erislaine'
@@ -25,8 +28,10 @@ const siteTitle = siteSettings?.siteName || landing?.siteTitle || 'Erislaine'
   contactWhatsApp={landing?.contactWhatsApp}
 >
   <section class="container section">
-    <h1 class="section-title">Blog</h1>
-    <p class="section-subtitle">Notas, guías y recursos para mejorar presencia digital y conversión.</p>
+    <h1 class="section-title">Blog de salud ORL</h1>
+    <p class="section-subtitle">
+      Guías y recomendaciones sobre oído, nariz y garganta para ayudarte a identificar síntomas y consultar a tiempo.
+    </p>
 
     {
       posts.length > 0 ? (
