@@ -1,8 +1,14 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "erislaine-landing-page",
+  "name": "erislaine",
   "pages_build_output_dir": "dist",
   "compatibility_date": "2026-03-26",
+  "vars": {
+    "PUBLIC_SANITY_PROJECT_ID": "kbufg24l",
+    "PUBLIC_SANITY_DATASET": "production",
+    "PUBLIC_STUDIO_URL": "https://erislaine.sanity.studio",
+    "PUBLIC_SITE_URL": "https://erislaine.pages.dev"
+  },
   "observability": {
     "enabled": true
   }
