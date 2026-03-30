@@ -111,13 +111,13 @@ export function mapLandingToViewModel(page: LandingPage): LandingViewModel {
       cards: getSafeCards(page),
     },
     about: {
-      eyebrow: about?.eyebrow || 'Doctora y equipo',
+      eyebrow: about?.eyebrow || 'Doctor y equipo',
       title: about?.title || 'Compromiso con tu salud ginecologica',
       paragraphs: aboutParagraphs.length ? aboutParagraphs : fallbackParagraphs.length ? fallbackParagraphs : [page.siteDescription],
       stats: about?.stats?.length
         ? about.stats
         : [
-            {value: '+2,500', label: 'Pacientes atendidas'},
+            {value: '+2,500', label: 'Pacientes atendidos'},
             {value: '10+', label: 'Anos de experiencia'},
           ],
       image: about?.image || page.heroImage,

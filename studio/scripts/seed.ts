@@ -116,12 +116,12 @@ const docs = [
       eyebrow: 'Sobre el doctor',
       title: BRAND.doctorName + ': acompanamiento profesional en salud femenina',
       paragraphs: [
-        'Especialista en ginecologia y obstetricia enfocada en prevencion, diagnostico temprano y educacion en salud femenina.',
+        'Especialista en ginecologia y obstetricia enfocado en prevencion, diagnostico temprano y educacion en salud femenina.',
         'La consulta prioriza escucha activa, claridad en las indicaciones y un plan de accion realista para cada paciente.',
       ],
       stats: [
         {_key: 'about-stat-1', value: '10+', label: 'Anos de experiencia'},
-        {_key: 'about-stat-2', value: '+2,500', label: 'Pacientes atendidas'},
+        {_key: 'about-stat-2', value: '+2,500', label: 'Pacientes atendidos'},
       ],
     },
     testimonials: [
