@@ -9,16 +9,6 @@ const {siteTitle} = Astro.props
 <header class="site-header" data-header-root>
   <div class="container header-inner">
     <div class="brand-group">
-      <button
-        class="menu-toggle"
-        type="button"
-        aria-label="Abrir menú"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-        data-menu-toggle
-      >
-        <span class="menu-glyph" aria-hidden="true"></span>
-      </button>
       <a href="/" class="brand">{siteTitle}</a>
     </div>
 
@@ -33,61 +23,19 @@ const {siteTitle} = Astro.props
       <a href="/blog">Blog</a>
       <a href="/studio">Panel</a>
     </nav>
-
-    <span class="mobile-avatar" aria-hidden="true">ET</span>
-  </div>
-
-  <div id="mobile-menu" class="mobile-menu" hidden data-mobile-menu>
-    <nav class="mobile-menu-nav" aria-label="Menú móvil">
-      <a href="/#inicio">Inicio</a>
-      <a href="/#servicios">Servicios</a>
-      <a href="/#sobre-mi">Sobre Mí</a>
-      <a href="/#agendar">Agendar</a>
-      <a href="/blog">Blog</a>
-      <a href="/studio">Panel</a>
-    </nav>
   </div>
 </header>
 
-<script is:inline>
-  const headerRoots = document.querySelectorAll('[data-header-root]')
-
-  headerRoots.forEach((root) => {
-    const toggle = root.querySelector('[data-menu-toggle]')
-    const menu = root.querySelector('[data-mobile-menu]')
-    if (!(toggle instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) return
-
-    const closeMenu = () => {
-      toggle.setAttribute('aria-expanded', 'false')
-      menu.hidden = true
-      document.body.classList.remove('mobile-menu-open')
-    }
-
-    const openMenu = () => {
-      toggle.setAttribute('aria-expanded', 'true')
-      menu.hidden = false
-      document.body.classList.add('mobile-menu-open')
-    }
-
-    toggle.addEventListener('click', () => {
-      const isOpen = toggle.getAttribute('aria-expanded') === 'true'
-      if (isOpen) closeMenu()
-      else openMenu()
-    })
-
-    menu.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', closeMenu)
-    })
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeMenu()
-    })
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth >= 920) closeMenu()
-    })
-  })
-</script>
+<div class="mobile-nav-wrap">
+  <nav class="mobile-button-nav" aria-label="Navegación rápida">
+    <a href="/#inicio">Inicio</a>
+    <a href="/#servicios">Servicios</a>
+    <a href="/#sobre-mi">Sobre Mí</a>
+    <a href="/#agendar">Agendar</a>
+    <a href="/blog">Blog</a>
+    <a href="/studio">Panel</a>
+  </nav>
+</div>
 
 <style>
   .site-header {
@@ -113,46 +61,6 @@ const {siteTitle} = Astro.props
     display: flex;
     align-items: center;
     gap: 0.55rem;
-  }
-
-  .menu-toggle {
-    display: none;
-    width: 2rem;
-    height: 2rem;
-    border: 0;
-    background: transparent;
-    padding: 0;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .menu-glyph {
-    width: 1rem;
-    height: 1rem;
-    position: relative;
-    display: block;
-  }
-
-  .menu-glyph::before,
-  .menu-glyph::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--primary);
-    border-radius: 999px;
-  }
-
-  .menu-glyph::before {
-    top: 2px;
-    box-shadow: 0 5px 0 0 var(--primary);
-  }
-
-  .menu-glyph::after {
-    top: 12px;
-    width: 70%;
   }
 
   .brand {
@@ -187,27 +95,12 @@ const {siteTitle} = Astro.props
     color: var(--on-surface-variant);
   }
 
-  .mobile-avatar {
-    display: none;
-    width: 1.9rem;
-    height: 1.9rem;
-    border-radius: 999px;
-    background: var(--surface-container-highest);
-    color: var(--on-surface-variant);
-    font-size: 0.62rem;
-    font-weight: 800;
-    font-family: var(--font-headline);
-    align-items: center;
-    justify-content: center;
-    letter-spacing: 0.06em;
-  }
-
-  .mobile-menu {
+  .mobile-button-nav {
     display: none;
   }
 
-  .mobile-menu[hidden] {
-    display: none !important;
+  .mobile-nav-wrap {
+    display: none;
   }
 
   @media (max-width: 919px) {
@@ -221,11 +114,6 @@ const {siteTitle} = Astro.props
       gap: 0.65rem;
     }
 
-    .menu-toggle,
-    .mobile-avatar {
-      display: inline-flex;
-    }
-
     .brand {
       font-size: clamp(1.55rem, 5vw, 2.25rem);
       letter-spacing: -0.015em;
@@ -236,47 +124,57 @@ const {siteTitle} = Astro.props
       display: none;
     }
 
-    .mobile-menu {
+    .mobile-nav-wrap {
       display: block;
       position: fixed;
-      inset: 62px 0 auto 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       z-index: 11;
-      padding: 0.6rem 0;
-      background: color-mix(in srgb, var(--surface) 88%, white 12%);
-      border-bottom: 1px solid color-mix(in srgb, var(--outline-variant) 30%, transparent);
-      backdrop-filter: blur(14px);
+      pointer-events: none;
+      padding: 0 0 0.5rem;
     }
 
-    .mobile-menu-nav {
-      width: min(1120px, 94vw);
+    .mobile-button-nav {
+      display: flex;
       margin: 0 auto;
-      background: var(--surface-container-lowest);
-      border-radius: 1rem;
-      padding: 0.4rem;
-      display: grid;
-      gap: 0.2rem;
+      width: min(94vw, 700px);
+      gap: 0.4rem;
+      overflow-x: auto;
+      padding: 0.45rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--surface) 92%, white 8%);
+      border: 1px solid color-mix(in srgb, var(--outline-variant) 45%, transparent);
+      backdrop-filter: blur(12px);
       box-shadow: var(--shadow-soft);
+      -webkit-overflow-scrolling: touch;
+      pointer-events: auto;
     }
 
-    .mobile-menu-nav a {
+    .mobile-button-nav a {
+      flex: 0 0 auto;
       text-decoration: none;
       color: var(--primary);
-      font-family: var(--font-headline);
-      font-weight: 700;
-      font-size: 1.05rem;
-      padding: 0.65rem 0.7rem;
-      border-radius: 0.7rem;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.5rem 0.8rem;
+      border-radius: 999px;
       min-height: 44px;
       display: flex;
       align-items: center;
+      justify-content: center;
+      background: var(--surface-container-lowest);
+      border: 1px solid var(--line);
+      white-space: nowrap;
     }
 
-    .mobile-menu-nav a:hover {
+    .mobile-button-nav a:hover {
       background: var(--surface-container-low);
     }
-  }
 
-  :global(body.mobile-menu-open) {
-    overflow: hidden;
+    :global(body) {
+      padding-bottom: 5.2rem;
+    }
   }
 </style>
