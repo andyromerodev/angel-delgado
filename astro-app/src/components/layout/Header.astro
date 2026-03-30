@@ -27,7 +27,8 @@ const {siteTitle} = Astro.props
 </header>
 
 <div class="mobile-nav-wrap">
-  <nav class="mobile-button-nav" aria-label="Navegación rápida">
+  <p class="mobile-swipe-hint" data-swipe-hint>Desliza</p>
+  <nav class="mobile-button-nav" aria-label="Navegación rápida" data-mobile-button-nav>
     <a href="/#inicio">Inicio</a>
     <a href="/#servicios">Servicios</a>
     <a href="/#sobre-mi">Sobre Mí</a>
@@ -36,6 +37,31 @@ const {siteTitle} = Astro.props
     <a href="/studio">Panel</a>
   </nav>
 </div>
+
+<script is:inline>
+  const mobileNavs = document.querySelectorAll('[data-mobile-button-nav]')
+
+  mobileNavs.forEach((nav) => {
+    if (!(nav instanceof HTMLElement)) return
+
+    const hint = nav.parentElement?.querySelector('[data-swipe-hint]')
+    if (!(hint instanceof HTMLElement)) return
+
+    const hideHint = () => hint.classList.add('is-hidden')
+    const maybeHideHint = () => {
+      if (nav.scrollLeft > 8) hideHint()
+    }
+
+    if (nav.scrollWidth <= nav.clientWidth + 2) {
+      hideHint()
+      return
+    }
+
+    nav.addEventListener('scroll', maybeHideHint, {passive: true})
+    nav.addEventListener('touchmove', maybeHideHint, {passive: true})
+    nav.addEventListener('wheel', maybeHideHint, {passive: true})
+  })
+</script>
 
 <style>
   .site-header {
@@ -103,6 +129,10 @@ const {siteTitle} = Astro.props
     display: none;
   }
 
+  .mobile-swipe-hint {
+    display: none;
+  }
+
   @media (max-width: 919px) {
     .site-header {
       backdrop-filter: blur(12px);
@@ -133,6 +163,35 @@ const {siteTitle} = Astro.props
       z-index: 11;
       pointer-events: none;
       padding: 0 0 0.5rem;
+    }
+
+    .mobile-swipe-hint {
+      display: block;
+      margin: 0 auto 0.32rem;
+      width: fit-content;
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.78;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      animation: swipeHintFloat 1.25s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .mobile-swipe-hint::before,
+    .mobile-swipe-hint::after {
+      content: '↔';
+      display: inline-block;
+      margin: 0 0.32rem;
+      font-size: 0.64rem;
+      opacity: 0.9;
+    }
+
+    .mobile-swipe-hint.is-hidden {
+      opacity: 0;
+      transform: translateY(4px);
+      animation: none;
     }
 
     .mobile-button-nav {
@@ -175,6 +234,16 @@ const {siteTitle} = Astro.props
 
     :global(body) {
       padding-bottom: 5.2rem;
+    }
+  }
+
+  @keyframes swipeHintFloat {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-2px);
     }
   }
 </style>
