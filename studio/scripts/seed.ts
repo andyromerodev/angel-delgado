@@ -38,7 +38,7 @@ const docs = [
       primaryCtaLink: BRAND.whatsapp,
       secondaryCtaText: 'Conocer servicios',
       secondaryCtaLink: '#servicios',
-      trustCardTitle: 'Especialista certificada',
+      trustCardTitle: 'Especialista certificado',
       trustCardSubtitle: 'Ginecologia y obstetricia con enfoque humano',
     },
     services: [
@@ -113,7 +113,7 @@ const docs = [
       },
     ],
     aboutDoctor: {
-      eyebrow: 'Sobre la doctora',
+      eyebrow: 'Sobre el doctor',
       title: BRAND.doctorName + ': acompanamiento profesional en salud femenina',
       paragraphs: [
         'Especialista en ginecologia y obstetricia enfocada en prevencion, diagnostico temprano y educacion en salud femenina.',
@@ -363,7 +363,7 @@ const docs = [
     isDraft: false,
     seoTitle: 'Menopausia: sintomas y tratamiento',
     seoDescription:
-      'Recomendaciones para identificar sintomas de menopausia y conversar opciones terapeuticas con tu ginecologa.',
+      'Recomendaciones para identificar sintomas de menopausia y conversar opciones terapeuticas con tu ginecologo.',
     body: [
       {
         _key: 'r1',

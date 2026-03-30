@@ -102,7 +102,7 @@ export function mapLandingToViewModel(page: LandingPage): LandingViewModel {
       secondaryText: heroSection?.secondaryCtaText || page.heroSecondaryCtaText || 'Ver servicios',
       secondaryLink: heroSection?.secondaryCtaLink || page.heroSecondaryCtaLink || '#servicios',
       image: heroSection?.image || page.heroImage,
-      trustCardTitle: heroSection?.trustCardTitle || 'Especialista certificada',
+      trustCardTitle: heroSection?.trustCardTitle || 'Especialista certificado',
       trustCardSubtitle: heroSection?.trustCardSubtitle || 'Consulta, control y prevencion ginecologica',
     },
     services: {

@@ -48,7 +48,7 @@ export default defineType({
       type: 'image',
       group: 'hero',
       options: {hotspot: true},
-      description: 'Foto principal de la doctora. Idealmente en retrato y con fondo neutro.',
+      description: 'Foto principal del doctor. Idealmente en retrato y con fondo neutro.',
       fields: [
         defineField({
           name: 'alt',

@@ -54,7 +54,7 @@ pnpm dev
 
 Incluye:
 
-- 1 `landingPage` (hero, servicios, sobre doctora, agenda y SEO)
+- 1 `landingPage` (hero, servicios, sobre doctor, agenda y SEO)
 - 1 `siteSettings`
 - 2 `category`
 - 2 `author`
