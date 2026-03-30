@@ -61,7 +61,7 @@ const doctorImageUrl =
   }
 
   .hero-copy {
-    background: linear-gradient(170deg, #ffffff, #f1f4f5);
+    background: var(--surface-container-lowest);
     border: 1px solid var(--line);
     border-radius: calc(var(--radius) + 4px);
     padding: clamp(1.25rem, 4vw, 2.75rem);
@@ -126,13 +126,13 @@ const doctorImageUrl =
   }
 
   .btn-primary {
-    background: #0f1720;
-    color: white;
+    background: var(--primary);
+    color: var(--on-primary);
   }
 
   .btn-ghost {
     border-color: var(--line);
-    background: white;
+    background: var(--surface-container-lowest);
   }
 
   @media (min-width: 860px) {

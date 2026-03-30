@@ -1,32 +1,32 @@
 :root {
-  --background: #f7fafe;
-  --surface: #f7fafe;
-  --surface-container-low: #f1f4f8;
-  --surface-container: #ebeef2;
-  --surface-container-highest: #e0e3e7;
+  --background: #f3f8f7;
+  --surface: #f7fbfa;
+  --surface-container-low: #ecf4f2;
+  --surface-container: #e4efec;
+  --surface-container-highest: #d5e4e0;
   --surface-container-lowest: #ffffff;
-  --primary: #005f73;
-  --primary-container: #2d788c;
-  --primary-fixed: #b2ebff;
-  --secondary: #2b6958;
-  --secondary-container: #aeedd7;
-  --on-secondary-container: #0b5040;
-  --tertiary: #735c00;
-  --tertiary-fixed: #ffe088;
-  --on-tertiary-fixed: #241a00;
+  --primary: #2d6970;
+  --primary-container: #3d7f86;
+  --primary-fixed: #d3eaed;
+  --secondary: #5a7a7d;
+  --secondary-container: #dceced;
+  --on-secondary-container: #274245;
+  --tertiary: #7a8f9b;
+  --tertiary-fixed: #dbe6ec;
+  --on-tertiary-fixed: #2d3e47;
   --on-primary: #ffffff;
-  --on-surface: #181c1f;
-  --on-surface-variant: #3e494a;
-  --outline-variant: #bdc9ca;
-  --muted: #5e676f;
-  --line: #dbe4ea;
+  --on-surface: #1e2a2c;
+  --on-surface-variant: #4d6063;
+  --outline-variant: #c2d2d5;
+  --muted: #667a7d;
+  --line: #d6e2e4;
   --bg: var(--background);
-  --font-headline: 'Manrope', 'Segoe UI', sans-serif;
-  --font-body: 'Work Sans', 'Segoe UI', sans-serif;
+  --font-headline: 'Sora', 'Segoe UI', sans-serif;
+  --font-body: 'DM Sans', 'Segoe UI', sans-serif;
   --radius-lg: 1.5rem;
   --radius-mobile-card: 1.35rem;
-  --shadow-soft: 0 14px 32px rgba(24, 28, 31, 0.06);
-  --shadow-elevated: 0 24px 42px rgba(24, 28, 31, 0.1);
+  --shadow-soft: 0 14px 32px rgba(31, 26, 21, 0.08);
+  --shadow-elevated: 0 24px 42px rgba(31, 26, 21, 0.14);
   --container: min(1120px, 92vw);
   --mobile-section-space: 3.2rem;
 }
@@ -46,7 +46,7 @@ html {
 }
 
 body {
-  background: radial-gradient(circle at top right, #dff2fb 0%, var(--background) 42%);
+  background: var(--background);
   color: var(--on-surface);
   font-family: var(--font-body);
   line-height: 1.6;
@@ -100,10 +100,7 @@ a {
 }
 
 .text-gradient {
-  background: linear-gradient(90deg, var(--primary), var(--primary-container));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--primary);
 }
 
 .btn {
@@ -124,13 +121,14 @@ a {
 
 .btn-primary {
   color: var(--on-primary);
-  background: linear-gradient(130deg, var(--primary), var(--primary-container));
+  background: var(--primary);
   box-shadow: var(--shadow-soft);
 }
 
 .btn-ghost {
   background: var(--surface-container-lowest);
   color: var(--on-surface);
+  border: 1px solid var(--line);
 }
 
 .btn-tertiary {
@@ -155,7 +153,7 @@ a {
 .prose p,
 .prose li,
 .prose blockquote {
-  color: #2b3338;
+  color: #332f2a;
 }
 
 .prose blockquote {
