@@ -10,13 +10,13 @@ const seo = createSeo({
   title: siteSettings?.defaultSeoTitle ? `Blog | ${siteSettings.defaultSeoTitle}` : 'Blog',
   description:
     siteSettings?.defaultSeoDescription ||
-    'Artículos médicos sobre oído, nariz y garganta para prevención, diagnóstico oportuno y cuidado diario.',
+    'Articulos de salud femenina sobre prevencion, control ginecologico y bienestar en cada etapa.',
   fallbackTitle: 'Blog',
   fallbackDescription:
-    'Artículos médicos sobre oído, nariz y garganta para prevención, diagnóstico oportuno y cuidado diario.',
+    'Articulos de salud femenina sobre prevencion, control ginecologico y bienestar en cada etapa.',
 })
 
-const siteTitle = siteSettings?.siteName || landing?.siteTitle || 'Erislaine'
+const siteTitle = siteSettings?.siteName || landing?.siteTitle || 'Angel'
 ---
 
 <BaseLayout
@@ -28,9 +28,9 @@ const siteTitle = siteSettings?.siteName || landing?.siteTitle || 'Erislaine'
   contactWhatsApp={landing?.contactWhatsApp}
 >
   <section class="container section">
-    <h1 class="section-title">Blog de salud ORL</h1>
+    <h1 class="section-title">Blog de salud femenina</h1>
     <p class="section-subtitle">
-      Guías y recomendaciones sobre oído, nariz y garganta para ayudarte a identificar síntomas y consultar a tiempo.
+      Guias y recomendaciones de ginecologia para identificar sintomas y consultar a tiempo.
     </p>
 
     {

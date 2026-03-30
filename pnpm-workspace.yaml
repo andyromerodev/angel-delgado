@@ -1,3 +1,7 @@
 packages:
-  - 'astro-app'
-  - 'studio'
+  - astro-app
+  - studio
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - workerd

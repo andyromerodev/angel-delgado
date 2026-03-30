@@ -4,7 +4,7 @@ import {getLandingPage, getSiteSettings} from '../lib/sanity/api'
 
 const [landing, siteSettings] = await Promise.all([getLandingPage(), getSiteSettings()])
 const studioUrl = import.meta.env.PUBLIC_STUDIO_URL || 'http://localhost:3333'
-const siteTitle = siteSettings?.siteName || landing?.siteTitle || 'Erislaine'
+const siteTitle = siteSettings?.siteName || landing?.siteTitle || 'Angel'
 ---
 
 <BaseLayout

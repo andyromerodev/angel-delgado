@@ -1,5 +1,5 @@
 {
-  "name": "@erislaine/astro-app",
+  "name": "@angel/astro-app",
   "type": "module",
   "version": "0.1.0",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "astro check && tsc --noEmit && astro build",
     "preview": "astro preview",
     "cf:preview": "pnpm build && wrangler pages dev dist",
-    "cf:deploy": "pnpm build && wrangler pages deploy dist --project-name erislaine-landing-page",
+    "cf:deploy": "pnpm build && wrangler pages deploy dist --project-name angel-landing-page",
     "cf:typegen": "wrangler types",
     "check": "astro check",
     "typecheck": "tsc --noEmit",

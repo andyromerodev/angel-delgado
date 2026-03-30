@@ -4,12 +4,12 @@ import {structureTool} from 'sanity/structure'
 import {schemaTypes} from './src/schemaTypes'
 import {deskStructure, singletonTypes} from './src/structure'
 
-const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'your-project-id'
+const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'auo8a6wh'
 const dataset = process.env.SANITY_STUDIO_DATASET || 'production'
 
 export default defineConfig({
-  name: 'erislaine-studio',
-  title: 'Erislaine Content Studio',
+  name: 'angel-ginecologia-studio',
+  title: 'Angel Ginecologia Content Studio',
   projectId,
   dataset,
   plugins: [

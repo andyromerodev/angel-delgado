@@ -2,9 +2,9 @@ import type {LandingPage} from '../sanity/types'
 import type {LandingViewModel} from './view-model'
 
 const DEFAULT_CONSULT_OPTIONS = [
-  'Rinoplastia (Estética/Funcional)',
-  'Otorrinolaringología General',
-  'Cirugía de Cabeza y Cuello',
+  'Consulta ginecológica general',
+  'Control prenatal',
+  'Planificación familiar',
   'Otros',
 ]
 
@@ -32,10 +32,10 @@ function getSafeCards(page: LandingPage): LandingViewModel['services']['cards'] 
     {
       variant: 'feature',
       label: 'Destacado',
-      title: primary?.title || 'Rinoplastia Integral',
+      title: primary?.title || 'Consulta ginecológica integral',
       description:
         primary?.description ||
-        'Fusión entre estética facial y funcionalidad respiratoria para resultados naturales.',
+        'Atención clínica personalizada para prevención, diagnóstico y seguimiento de salud femenina.',
       bullets: [secondary?.title, tertiary?.title].filter(Boolean) as string[],
       ctaText: 'Saber más',
       ctaLink: '#agendar',
@@ -64,10 +64,10 @@ function getSafeCards(page: LandingPage): LandingViewModel['services']['cards'] 
       : []),
     {
       variant: 'accent',
-      title: accent?.title || 'Armonización Nasal Sin Cirugía',
+      title: accent?.title || 'Planificación familiar y salud hormonal',
       description:
         accent?.description ||
-        'Opciones no invasivas para perfilar el rostro con enfoque clínico y natural.',
+        'Acompañamiento profesional para tomar decisiones informadas en cada etapa de la vida.',
       bullets: [],
       ctaText: 'Ver procedimientos',
       ctaLink: '#agendar',
@@ -84,49 +84,48 @@ export function mapLandingToViewModel(page: LandingPage): LandingViewModel {
 
   return {
     siteTitle: page.siteTitle,
-    footerText: page.footerText || 'Dra. Erislaine Tamayo - Otorrinolaringología y Rinoplastia.',
+    footerText: page.footerText || 'Dr. Angel Delgado Arevalo - Ginecologia y Salud Femenina.',
     contactEmail: page.contactEmail,
     contactWhatsApp: page.contactWhatsApp,
     hero: {
-      badge: heroSection?.badge || 'Excelencia Quirúrgica',
-      titlePrefix: heroSection?.titlePrefix || 'Respire.',
-      titleHighlight: heroSection?.titleHighlight || 'Transforme.',
-      titleSuffix: heroSection?.titleSuffix || 'Sienta la Vida.',
+      badge: heroSection?.badge || 'Salud femenina integral',
+      titlePrefix: heroSection?.titlePrefix || 'Escucha.',
+      titleHighlight: heroSection?.titleHighlight || 'Prevencion.',
+      titleSuffix: heroSection?.titleSuffix || 'Bienestar.',
       subtitle:
         heroSection?.subtitle ||
         page.heroSubtitle ||
         page.siteDescription ||
-        'Otorrinolaringología y rinoplastia en Tarapoto con enfoque humano y precisión clínica.',
+        'Atencion ginecologica con enfoque humano y acompanamiento clinico personalizado.',
       primaryText: heroSection?.primaryCtaText || page.heroCtaText || 'Agendar Consulta',
       primaryLink: heroSection?.primaryCtaLink || page.heroCtaLink || '#agendar',
-      secondaryText: heroSection?.secondaryCtaText || page.heroSecondaryCtaText || 'Ver Procedimientos',
+      secondaryText: heroSection?.secondaryCtaText || page.heroSecondaryCtaText || 'Ver servicios',
       secondaryLink: heroSection?.secondaryCtaLink || page.heroSecondaryCtaLink || '#servicios',
       image: heroSection?.image || page.heroImage,
-      trustCardTitle: heroSection?.trustCardTitle || 'Especialista Certificada',
-      trustCardSubtitle: heroSection?.trustCardSubtitle || 'Rinoplastia Estética y Funcional',
+      trustCardTitle: heroSection?.trustCardTitle || 'Especialista certificada',
+      trustCardSubtitle: heroSection?.trustCardSubtitle || 'Consulta, control y prevencion ginecologica',
     },
     services: {
-      eyebrow: page.servicesShowcase?.eyebrow || 'Nuestra Especialidad',
-      title: page.servicesShowcase?.title || 'Precisión Médica & Arte Facial',
+      eyebrow: page.servicesShowcase?.eyebrow || 'Nuestros servicios',
+      title: page.servicesShowcase?.title || 'Atencion profesional en cada etapa',
       cards: getSafeCards(page),
     },
     about: {
-      eyebrow: about?.eyebrow || 'Trayectoria & Filosofía',
-      title: about?.title || 'El Santuario de la Salud en Tarapoto',
+      eyebrow: about?.eyebrow || 'Doctora y equipo',
+      title: about?.title || 'Compromiso con tu salud ginecologica',
       paragraphs: aboutParagraphs.length ? aboutParagraphs : fallbackParagraphs.length ? fallbackParagraphs : [page.siteDescription],
       stats: about?.stats?.length
         ? about.stats
         : [
-            {value: '+1000', label: 'Casos Exitosos'},
-            {value: '10+', label: 'Años de Experiencia'},
+            {value: '+2,500', label: 'Pacientes atendidas'},
+            {value: '10+', label: 'Anos de experiencia'},
           ],
       image: about?.image || page.heroImage,
     },
     appointment: {
-      contactTitle: appointment?.contactTitle || 'Información de Contacto',
+      contactTitle: appointment?.contactTitle || 'Informacion de contacto',
       contactDescription:
-        appointment?.contactDescription ||
-        'Estamos listos para atenderte. Agenda una consulta y recibe atención personalizada.',
+        appointment?.contactDescription || 'Agenda tu cita y recibe atencion personalizada.',
       contactItems: appointment?.contactItems?.length
         ? appointment.contactItems.map((item) => ({
             label: item.label,
@@ -137,34 +136,31 @@ export function mapLandingToViewModel(page: LandingPage): LandingViewModel {
             {label: 'WhatsApp', value: page.contactWhatsApp || 'No configurado', iconName: 'call'},
             {label: 'Email', value: page.contactEmail || 'No configurado', iconName: 'mail'},
           ],
-      scheduleTitle: appointment?.scheduleTitle || 'Horario de Atención',
+      scheduleTitle: appointment?.scheduleTitle || 'Horario de atencion',
       scheduleItems: appointment?.scheduleItems?.length
         ? appointment.scheduleItems
         : ['Lunes a Viernes: 9:00 AM - 7:00 PM', 'Sábados: 9:00 AM - 1:00 PM'],
       formTitle: appointment?.formTitle || 'Agenda tu Consulta',
-      formSubtitle:
-        appointment?.formSubtitle ||
-        'Completa el formulario y nuestro equipo te contactará para confirmar tu cita.',
-      fullNameLabel: appointment?.fullNameLabel || 'Nombre Completo',
-      fullNamePlaceholder: appointment?.fullNamePlaceholder || 'Ej. Juan Pérez',
-      emailLabel: appointment?.emailLabel || 'Correo Electrónico',
+      formSubtitle: appointment?.formSubtitle || 'Completa el formulario y te contactaremos para confirmar.',
+      fullNameLabel: appointment?.fullNameLabel || 'Nombre completo',
+      fullNamePlaceholder: appointment?.fullNamePlaceholder || 'Ej. Ana Perez',
+      emailLabel: appointment?.emailLabel || 'Correo electronico',
       emailPlaceholder: appointment?.emailPlaceholder || 'ejemplo@correo.com',
-      phoneLabel: appointment?.phoneLabel || 'Número de Teléfono',
+      phoneLabel: appointment?.phoneLabel || 'Numero de telefono',
       phonePlaceholder: appointment?.phonePlaceholder || '+51 --- --- ---',
-      consultTypeLabel: appointment?.consultTypeLabel || 'Tipo de Consulta',
-      consultTypePlaceholder: appointment?.consultTypePlaceholder || 'Seleccione una opción',
+      consultTypeLabel: appointment?.consultTypeLabel || 'Tipo de consulta',
+      consultTypePlaceholder: appointment?.consultTypePlaceholder || 'Selecciona una opcion',
       consultTypeOptions: appointment?.consultTypeOptions?.length
         ? appointment.consultTypeOptions
         : DEFAULT_CONSULT_OPTIONS,
-      messageLabel: appointment?.messageLabel || 'Mensaje (Opcional)',
-      messagePlaceholder:
-        appointment?.messagePlaceholder || '¿Tienes alguna duda o requerimiento especial?',
-      submitText: appointment?.submitText || 'Enviar Solicitud de Cita',
+      messageLabel: appointment?.messageLabel || 'Mensaje (opcional)',
+      messagePlaceholder: appointment?.messagePlaceholder || 'Describe tu consulta o sintomas principales.',
+      submitText: appointment?.submitText || 'Solicitar cita',
     },
     floatingCta:
       page.floatingCta?.link || page.contactWhatsApp
         ? {
-            label: page.floatingCta?.label || 'Chatea por WhatsApp',
+            label: page.floatingCta?.label || 'Escribir por WhatsApp',
             link: page.floatingCta?.link || page.contactWhatsApp || '#agendar',
             iconName: page.floatingCta?.iconName || 'chat',
           }

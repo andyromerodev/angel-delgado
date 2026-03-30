@@ -1,6 +1,6 @@
-# Erislaine Landing Page (Astro + Sanity + pnpm)
+# Angel Landing Page (Astro + Sanity + pnpm)
 
-Base profesional para una landing page + blog administrable con Sanity Studio.
+Landing + blog para consulta de ginecologia, con contenido editable en Sanity Studio.
 
 ## Stack
 
@@ -8,7 +8,6 @@ Base profesional para una landing page + blog administrable con Sanity Studio.
 - Sanity Studio (CMS)
 - TypeScript
 - GROQ
-- Portable Text
 - pnpm workspaces
 
 ## Estructura
@@ -16,41 +15,7 @@ Base profesional para una landing page + blog administrable con Sanity Studio.
 ```txt
 .
 ├── astro-app/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── blog/
-│   │   │   ├── landing/
-│   │   │   └── layout/
-│   │   ├── layouts/
-│   │   ├── lib/
-│   │   │   ├── sanity/
-│   │   │   └── utils/
-│   │   ├── pages/
-│   │   │   ├── blog/
-│   │   │   │   ├── [slug].astro
-│   │   │   │   └── index.astro
-│   │   │   ├── index.astro
-│   │   │   └── studio.astro
-│   │   └── styles/
-│   ├── astro.config.mjs
-│   └── package.json
 ├── studio/
-│   ├── scripts/
-│   │   └── seed.ts
-│   ├── src/
-│   │   ├── schemaTypes/
-│   │   │   ├── documents/
-│   │   │   │   ├── author.ts
-│   │   │   │   ├── category.ts
-│   │   │   │   ├── landingPage.ts
-│   │   │   │   ├── post.ts
-│   │   │   │   └── siteSettings.ts
-│   │   │   ├── objects/
-│   │   │   │   └── blockContent.tsx
-│   │   │   └── index.ts
-│   │   └── structure.ts
-│   ├── sanity.config.ts
-│   └── package.json
 ├── package.json
 └── pnpm-workspace.yaml
 ```
@@ -61,7 +26,7 @@ Base profesional para una landing page + blog administrable con Sanity Studio.
 
 ```bash
 PUBLIC_SITE_URL="https://tu-dominio.com"
-PUBLIC_SANITY_PROJECT_ID="tu-project-id"
+PUBLIC_SANITY_PROJECT_ID="your-project-id"
 PUBLIC_SANITY_DATASET="production"
 PUBLIC_STUDIO_URL="http://localhost:3333"
 ```
@@ -69,12 +34,12 @@ PUBLIC_STUDIO_URL="http://localhost:3333"
 ### `studio/.env`
 
 ```bash
-SANITY_STUDIO_PROJECT_ID="tu-project-id"
+SANITY_STUDIO_PROJECT_ID="your-project-id"
 SANITY_STUDIO_DATASET="production"
 SANITY_STUDIO_STUDIO_HOST=""
 ```
 
-## Instalación y desarrollo
+## Instalacion y desarrollo
 
 ```bash
 pnpm install
@@ -83,13 +48,13 @@ pnpm dev
 
 - Astro: [http://localhost:4321](http://localhost:4321)
 - Sanity Studio: [http://localhost:3333](http://localhost:3333)
-- Ruta en Astro para acceder al panel: [http://localhost:4321/studio](http://localhost:4321/studio)
+- Ruta desde Astro al panel: [http://localhost:4321/studio](http://localhost:4321/studio)
 
 ## Seed de contenido inicial
 
 Incluye:
 
-- 1 `landingPage`
+- 1 `landingPage` (hero, servicios, sobre doctora, agenda y SEO)
 - 1 `siteSettings`
 - 2 `category`
 - 2 `author`
@@ -101,9 +66,9 @@ Ejecuta:
 pnpm seed
 ```
 
-> Requiere sesión iniciada en Sanity CLI (`sanity login`) porque el script usa `--with-user-token`.
+> Requiere login en Sanity CLI (`sanity login`) porque usa `--with-user-token`.
 
-## Scripts útiles
+## Scripts utiles
 
 ```bash
 pnpm dev
@@ -117,18 +82,16 @@ pnpm check
 pnpm seed
 ```
 
-## Flujo editorial (cliente)
+## Deploy Studio
 
-1. Abrir Sanity Studio.
-2. Editar `Landing Page` o `Posts`.
-3. En posts: completar `title`, `slug`, `excerpt`, `publishedAt`, `author`, `category`, `coverImage`, `body`.
-4. Publicar con `Publish`.
+```bash
+cd studio
+pnpm deploy
+```
 
-## Antes de desplegar en Netlify
+## Deploy Cloudflare Pages
 
-1. Configura variables de entorno del frontend en Netlify (`PUBLIC_SITE_URL`, `PUBLIC_SANITY_PROJECT_ID`, `PUBLIC_SANITY_DATASET`, `PUBLIC_STUDIO_URL`).
-2. Usa `astro-app` como base de build del frontend.
-3. Verifica `pnpm build` sin errores.
-4. Confirma que el contenido de Sanity está publicado (no draft).
-5. Si vas a desplegar Studio por separado, ejecuta desde `studio`: `pnpm deploy`.
-
+```bash
+cd astro-app
+pnpm cf:deploy
+```

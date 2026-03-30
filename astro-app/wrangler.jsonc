@@ -1,13 +1,13 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "erislaine",
+  "name": "angel-landing-page",
   "pages_build_output_dir": "dist",
   "compatibility_date": "2026-03-26",
   "vars": {
-    "PUBLIC_SANITY_PROJECT_ID": "kbufg24l",
+    "PUBLIC_SANITY_PROJECT_ID": "your-project-id",
     "PUBLIC_SANITY_DATASET": "production",
-    "PUBLIC_STUDIO_URL": "https://erislaine.sanity.studio",
-    "PUBLIC_SITE_URL": "https://erislaine.pages.dev"
+    "PUBLIC_STUDIO_URL": "https://your-studio-host.sanity.studio",
+    "PUBLIC_SITE_URL": "https://your-project.pages.dev"
   },
   "observability": {
     "enabled": true

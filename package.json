@@ -1,17 +1,17 @@
 {
-  "name": "erislaine-landing-page",
+  "name": "angel-landing-page",
   "private": true,
-  "description": "Production-ready Astro + Sanity landing page and blog monorepo",
+  "description": "Landing page + blog para ginecología con Astro + Sanity",
   "scripts": {
-    "dev": "concurrently \"pnpm --filter @erislaine/astro-app dev\" \"pnpm --filter @erislaine/studio dev\"",
-    "dev:app": "pnpm --filter @erislaine/astro-app dev",
-    "dev:studio": "pnpm --filter @erislaine/studio dev",
+    "dev": "concurrently \"pnpm --filter @angel/astro-app dev\" \"pnpm --filter @angel/studio dev\"",
+    "dev:app": "pnpm --filter @angel/astro-app dev",
+    "dev:studio": "pnpm --filter @angel/studio dev",
     "build": "pnpm -r build",
-    "build:app": "pnpm --filter @erislaine/astro-app build",
-    "build:studio": "pnpm --filter @erislaine/studio build",
-    "preview": "pnpm --filter @erislaine/astro-app preview",
-    "check": "pnpm --filter @erislaine/astro-app check",
-    "seed": "pnpm --filter @erislaine/studio seed"
+    "build:app": "pnpm --filter @angel/astro-app build",
+    "build:studio": "pnpm --filter @angel/studio build",
+    "preview": "pnpm --filter @angel/astro-app preview",
+    "check": "pnpm --filter @angel/astro-app check",
+    "seed": "pnpm --filter @angel/studio seed"
   },
   "keywords": [
     "sanity",
